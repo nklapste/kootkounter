@@ -9,9 +9,10 @@ import os
 import sys
 from logging.handlers import TimedRotatingFileHandler
 
-from kootkounter import DEFAULT_SQLITE_PATH
-from kootkounter.bot import BOT
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
+import kootkounter.bot
 
 LOG_LEVEL_STRINGS = ["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"]
 
@@ -77,8 +78,8 @@ def get_parser() -> argparse.ArgumentParser:
                         required=True,
                         help="Path to file containing the Discord token for "
                              "the bot")
-
-    parser.add_argument("--database", default=DEFAULT_SQLITE_PATH,
+    parser.add_argument("-d", "--database", dest="database",
+                        default="degeneracy.db",
                         help="Path to the SQLITE database to store state")
 
     add_log_parser(parser)
