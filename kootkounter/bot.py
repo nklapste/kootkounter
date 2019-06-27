@@ -34,8 +34,6 @@ DB: Session = None
 
 class Degenerate(BASE):
     __tablename__ = 'degenerate'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     name = Column(String(250), default="Unknown")
     koot_count = Column(Integer, default=0)
