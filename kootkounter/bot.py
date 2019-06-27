@@ -105,10 +105,12 @@ class ThrottleDecorator(object):
 def throttle(interval):
     """Decorator that throttles a function from called multiple times within
     a specified interval"""
-    def applyDecorator(func):
+
+    def apply_decorator(func):
         decorator = ThrottleDecorator(func=func, interval=interval)
         return wraps(func)(decorator)
-    return applyDecorator
+
+    return apply_decorator
 
 
 async def help_(message: Message):
