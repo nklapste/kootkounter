@@ -43,6 +43,7 @@ class Degenerate(BASE):
     uwu_count = Column(Integer, default=0)
     owo_count = Column(Integer, default=0)
     boi_count = Column(Integer, default=0)
+    nuu_count = Column(Integer, default=0)
     nerd_count = Column(Integer, default=0)
     ish_count = Column(Integer, default=0)
 
@@ -129,6 +130,7 @@ async def show(message: Message):
             f"owo: {degenerate.owo_count:<5}"
             f"uwu: {degenerate.uwu_count:<5}"
             f"boi: {degenerate.boi_count:<5}"
+            f"nuu: {degenerate.nuu_count:<5}"
             f"nerd: {degenerate.nerd_count:<5}"
             f"isha: {degenerate.ish_count:<5}"
             f"``"
