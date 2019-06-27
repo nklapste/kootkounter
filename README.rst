@@ -2,7 +2,7 @@
 kootkounter
 ###########
 
-A Discord bot for tracking degeneracy within a discord server.
+A Discord bot for tracking degeneracy within a Discord server.
 
 A silly submission for the Discord Hack Week under the 'moderation' category.
 
