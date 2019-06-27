@@ -67,52 +67,6 @@ def update_degenerate_terms(author: User, terms: List[str]):
     DB.commit()
 
 
-def degeneracy_detector(string: str) -> List[str]:
-    """Detect degeneracy within a string"""
-    tokens = string.replace("0", "o").lower().split()
-    degeneracy = [token for token in tokens if token in DEGENERATE_TERMS]
-    return degeneracy
-
-
-WARN_COOLDOWN = 10
-
-
-class ThrottleException(Exception):
-    """Operation is being called too soon"""
-
-
-class ThrottleDecorator(object):
-    def __init__(self, func, interval):
-        self.func = func
-        self.interval = interval
-        self.last_run = 0
-
-    def __get__(self, obj, objtype=None):
-        if obj is None:
-            return self.func
-        return partial(self, obj)
-
-    def __call__(self, *args, **kwargs):
-        now = time.time()
-        if now - self.last_run < self.interval:
-            raise ThrottleException("Call after {0} seconds".format(
-                self.last_run + self.interval - now))
-        else:
-            self.last_run = now
-            return self.func(*args, **kwargs)
-
-
-def throttle(interval):
-    """Decorator that throttles a function from called multiple times within
-    a specified interval"""
-
-    def apply_decorator(func):
-        decorator = ThrottleDecorator(func=func, interval=interval)
-        return wraps(func)(decorator)
-
-    return apply_decorator
-
-
 async def help_(message: Message):
     await message.channel.send("""```
 kootkounter: Tracking degeneracy across Discord!
@@ -180,10 +134,56 @@ async def show(message: Message):
         )
 
 
+WARN_COOLDOWN = 10
+
+
+class ThrottleException(Exception):
+    """Operation is being called too soon"""
+
+
+class ThrottleDecorator(object):
+    def __init__(self, func, interval):
+        self.func = func
+        self.interval = interval
+        self.last_run = 0
+
+    def __get__(self, obj, objtype=None):
+        if obj is None:
+            return self.func
+        return partial(self, obj)
+
+    def __call__(self, *args, **kwargs):
+        now = time.time()
+        if now - self.last_run < self.interval:
+            raise ThrottleException("Call after {0} seconds".format(
+                self.last_run + self.interval - now))
+        else:
+            self.last_run = now
+            return self.func(*args, **kwargs)
+
+
+def throttle(interval):
+    """Decorator that throttles a function from called multiple times within
+    a specified interval"""
+
+    def apply_decorator(func):
+        decorator = ThrottleDecorator(func=func, interval=interval)
+        return wraps(func)(decorator)
+
+    return apply_decorator
+
+
 @throttle(WARN_COOLDOWN)
 async def warn_degenerate(message: Message):
     """Warn a Discord user of their degeneracy"""
     await message.channel.send("*{} will remember this*".format(BOT.user.name))
+
+
+def degeneracy_detector(string: str) -> List[str]:
+    """Detect degeneracy within a string"""
+    tokens = string.replace("0", "o").lower().split()
+    degeneracy = [token for token in tokens if token in DEGENERATE_TERMS]
+    return degeneracy
 
 
 @BOT.event
