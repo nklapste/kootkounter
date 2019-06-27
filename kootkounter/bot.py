@@ -3,6 +3,7 @@
 
 """Definition of the kootkounter discord bot"""
 
+import re
 import time
 from functools import partial, wraps
 from logging import getLogger
@@ -35,7 +36,7 @@ DB: Session = None
 
 
 class Degenerate(BASE):
-    __tablename__ = 'degenerate'
+    __tablename__ = "degenerate"
     id = Column(Integer, primary_key=True)
     name = Column(String(250), default="Unknown")
     koot_count = Column(Integer, default=0)
@@ -181,7 +182,8 @@ async def warn_degenerate(message: Message):
 
 def degeneracy_detector(string: str) -> List[str]:
     """Detect degeneracy within a string"""
-    tokens = string.replace("0", "o").lower().split()
+    tokens = re.sub("[^a-zA-Z\\s]", "",
+                    string.replace("0", "o").lower()).split()
     degeneracy = [token for token in tokens if token in DEGENERATE_TERMS]
     return degeneracy
 
