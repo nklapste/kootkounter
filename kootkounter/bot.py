@@ -29,6 +29,8 @@ DEGENERATE_TERMS = [
 ]
 
 BASE = declarative_base()
+
+# to be set within invoking __main__.py
 DB: Session = None
 
 
@@ -45,6 +47,7 @@ class Degenerate(BASE):
 
 
 def get_or_create(model, **kwargs):
+    """Get or create a sqlalchemy model"""
     instance = DB.query(model).filter_by(**kwargs).first()
     if instance:
         return instance
@@ -55,6 +58,7 @@ def get_or_create(model, **kwargs):
 
 
 def update_degenerate_terms(author: User, terms: List[str]):
+    """Update the database of degeneracy"""
     degenerate = get_or_create(Degenerate, id=author.id)
     setattr(degenerate, "name", author.name)
     for term in terms:
@@ -64,6 +68,7 @@ def update_degenerate_terms(author: User, terms: List[str]):
 
 
 def degeneracy_detector(string: str) -> List[str]:
+    """Detect degeneracy within a string"""
     tokens = string.replace("0", "o").lower().split()
     degeneracy = [token for token in tokens if token in DEGENERATE_TERMS]
     return degeneracy
@@ -98,10 +103,11 @@ class ThrottleDecorator(object):
 
 
 def throttle(interval):
+    """Decorator that throttles a function from called multiple times within
+    a specified interval"""
     def applyDecorator(func):
         decorator = ThrottleDecorator(func=func, interval=interval)
         return wraps(func)(decorator)
-
     return applyDecorator
 
 
@@ -128,6 +134,7 @@ Available commands:
 
 
 async def register(message: Message):
+    """Register a Discord user for degeneracy tracking"""
     try:
         degenerate_id = int(message.content.split()[1])
         get_or_create(Degenerate, id=degenerate_id)
@@ -141,6 +148,7 @@ async def register(message: Message):
 
 
 async def unregister(message: Message):
+    """Unregister a Discord user from degeneracy tracking"""
     try:
         degenerate_id = int(message.content.split()[1])
         DB.delete(get_or_create(Degenerate, id=degenerate_id))
@@ -154,6 +162,7 @@ async def unregister(message: Message):
 
 
 async def show(message: Message):
+    """Show the collected degeneracy statistics on registered Discord users"""
     for degenerate in DB.query(Degenerate):
         await message.channel.send(
             f"``"
@@ -171,6 +180,7 @@ async def show(message: Message):
 
 @throttle(WARN_COOLDOWN)
 async def warn_degenerate(message: Message):
+    """Warn a Discord user of their degeneracy"""
     await message.channel.send("*{} will remember this*".format(BOT.user.name))
 
 
@@ -188,6 +198,8 @@ async def on_message(message: Message):
             .filter(Degenerate.id == message.author.id).first():
         degeneracy = degeneracy_detector(message.content)
         if degeneracy:
+            __log__.info(
+                f"Degeneracy detected: user: {message.author.id} message: {message.content} degeneracy: {degeneracy}")
             update_degenerate_terms(message.author, degeneracy)
             await warn_degenerate(message)
 
