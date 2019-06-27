@@ -61,7 +61,7 @@ def readme():
 setup(
     name="kootkounter",
     version=VERSION,
-    description="A Discord bot", # TODO: fill
+    description="A Discord bot for tracking degeneracy within a Discord server",
     long_description=readme(),
     author="Nathan Klapstein",
     author_email="nklapste@ualberta.ca",
