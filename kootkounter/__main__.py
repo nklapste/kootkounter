@@ -96,7 +96,10 @@ def main() -> int:
     with open(args.token_file, "r") as f:
         token = f.read().strip()
 
-    BOT.run(token)
+    engine = create_engine('sqlite:///{}'.format(args.database))
+    kootkounter.bot.BASE.metadata.create_all(engine)
+    kootkounter.bot.DB = sessionmaker(bind=engine)()
+    kootkounter.bot.BOT.run(token)
 
     return 0
 
