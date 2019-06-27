@@ -45,7 +45,7 @@ class Degenerate(BASE):
     boi_count = Column(Integer, default=0)
     nuu_count = Column(Integer, default=0)
     nerd_count = Column(Integer, default=0)
-    ish_count = Column(Integer, default=0)
+    isha_count = Column(Integer, default=0)
 
 
 def get_or_create(model, **kwargs):
