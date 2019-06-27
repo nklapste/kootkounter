@@ -11,8 +11,8 @@ from kootkounter.bot import degeneracy_detector, ThrottleException, throttle
 @pytest.mark.parametrize(
     "string,expected",
     [
-        ("owo are you a koot boi nerd ishh?!?!? oh nuu UWU!",
-         ["owo", "koot", "boi", "nerd", "ishh", "nuu", "uwu"]),
+        ("owo are you a koot boi nerd?!?!? isha you oh nuu UWU!",
+         ["owo", "koot", "boi", "nerd", "isha", "nuu", "uwu"]),
         ("I'm a normal person", [])
     ]
 )

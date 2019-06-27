@@ -26,7 +26,7 @@ DEGENERATE_TERMS = [
     "boi",
     "nuu",
     "nerd",
-    "ishh"
+    "isha"
 ]
 
 BASE = declarative_base()
@@ -130,7 +130,7 @@ async def show(message: Message):
             f"uwu: {degenerate.uwu_count:<5}"
             f"boi: {degenerate.boi_count:<5}"
             f"nerd: {degenerate.nerd_count:<5}"
-            f"ish: {degenerate.ish_count:<5}"
+            f"isha: {degenerate.ish_count:<5}"
             f"``"
         )
 
