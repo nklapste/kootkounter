@@ -75,8 +75,8 @@ setup(
     packages=find_packages(exclude=["test"]),
     include_package_data=True,
     install_requires=[
-        "discord.py",
-        "sqlalchemy",
+        "discord.py>=1.2.2,<2.0.0",
+        "sqlalchemy>=1.3.5,<2.0.0",
     ],
     tests_require=[
         "pytest>=4.1.0,<5.0.0",
