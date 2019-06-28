@@ -132,7 +132,7 @@ async def show(message: Message):
             f"boi: {degenerate.boi_count:<5}"
             f"nuu: {degenerate.nuu_count:<5}"
             f"nerd: {degenerate.nerd_count:<5}"
-            f"isha: {degenerate.ish_count:<5}"
+            f"isha: {degenerate.isha_count:<5}"
             f"``"
         )
 
