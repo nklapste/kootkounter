@@ -4,7 +4,20 @@ kootkounter
 
 A Discord bot for tracking degeneracy within a Discord server.
 
+This bot tracks registered Discord users of there degeneracy keeping statistics
+of the amount of times users say the following words:
+
+* koot
+* uwu
+* owo
+* boi
+* nuu
+* nerd
+* isha
+
 A silly submission for the Discord Hack Week under the 'moderation' category.
+
+For El Leche Presidente.
 
 
 Requirements
@@ -13,6 +26,8 @@ Requirements
 * Python3.6+
 
 * Discord.py
+
+* sqlalchemy
 
 
 Installation
@@ -36,3 +51,6 @@ following command:
 .. code-block:: console
 
     kootkounter --help
+
+After instancing kootkounter into your Discord server type ``!KKhelp`` to get
+assistance on using kootkounter within your Discord server.
