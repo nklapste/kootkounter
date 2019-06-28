@@ -2,6 +2,10 @@
 kootkounter
 ###########
 
+.. image:: https://travis-ci.com/nklapste/kootkounter.svg?branch=master
+    :target: https://travis-ci.com/nklapste/kootkounter
+    :alt: build status
+
 A Discord bot for tracking degeneracy within a Discord server.
 
 This bot tracks registered Discord users of there degeneracy keeping statistics
