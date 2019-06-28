@@ -39,7 +39,7 @@ Installation
 
 kootkounter can be installed from source by running:
 
-.. code-block:: bash
+.. code-block:: console
 
     pip install .
 
